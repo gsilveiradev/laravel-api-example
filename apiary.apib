@@ -1,0 +1,47 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Laravel API Example
+
+Welcome to my example api built with Laravel and Docker dev environment with laradocker!
+
+This RESTful API use the api versioning concept, JWT authentication and CORS enabled by default.
+
+More information about this API: [laravel-api-example project](https://github.com/guissilveira/laravel-api-example) on GitHub.
+
+## Authenticate [/api/v1/authentication]
+
+### Create a New Authentication [POST]
+
+Authenticate an User on API.
+
++ Request (application/json)
+        
+        {
+            "email": "The e-mail account",
+            "password": "The account password
+        }
+
++ Response 200 (application/json)
+    
+    + Body   
+    
+            {
+                "message": "User logged.",
+                "data": {
+                    "id": 2,
+                    "name": "Guilherme",
+                    "email": "guissilveira@gmail.com",
+                    "created_at": {
+                        "date": "2017-03-28 20:50:54.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "updated_at": {
+                        "date": "2017-04-06 14:23:21.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6XC9cLzE5Mi4xNjguMTYwLjEwMFwvYXBpXC92MVwvYXV0aGVudGljYXRpb24iLCJpYXQiOjE0OTQyNTUwNjIsImV4cCI6MTQ5NDI3NjY2MiwibmJmIjoxNDk0MjU1MDYyLCJqdGkiOiI3ODMzODBhMDYwZjRiNDE3NmRhM2QyOTBiNmQ1YjAzNiJ9.V7EvqUzfdx6MBhMtC5vrO3X_23zCqfLsKBjGrC-ZEE0"
+                }
+            }
