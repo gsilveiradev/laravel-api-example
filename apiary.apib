@@ -9,29 +9,29 @@ This RESTful API use the api versioning concept, JWT authentication and CORS ena
 
 More information about this API: [laravel-api-example project](https://github.com/guissilveira/laravel-api-example) on GitHub.
 
-## Authenticate [/api/v1/authentication]
+## Authentication Collection [/api/v1/authentication]
 
-### Create a New Authentication [POST]
+### Authenticate a user [POST]
 
 Authenticate an User on API.
 
 + Request (application/json)
-        
+
         {
             "email": "The e-mail account",
             "password": "The account password
         }
 
 + Response 200 (application/json)
-    
+
     + Body   
     
             {
                 "message": "User logged.",
                 "data": {
                     "id": 2,
-                    "name": "Guilherme",
-                    "email": "guissilveira@gmail.com",
+                    "name": "User",
+                    "email": "user@email.com",
                     "created_at": {
                         "date": "2017-03-28 20:50:54.000000",
                         "timezone_type": 3,
@@ -42,6 +42,177 @@ Authenticate an User on API.
                         "timezone_type": 3,
                         "timezone": "UTC"
                     },
-                    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjIsImlzcyI6Imh0dHA6XC9cLzE5Mi4xNjguMTYwLjEwMFwvYXBpXC92MVwvYXV0aGVudGljYXRpb24iLCJpYXQiOjE0OTQyNTUwNjIsImV4cCI6MTQ5NDI3NjY2MiwibmJmIjoxNDk0MjU1MDYyLCJqdGkiOiI3ODMzODBhMDYwZjRiNDE3NmRhM2QyOTBiNmQ1YjAzNiJ9.V7EvqUzfdx6MBhMtC5vrO3X_23zCqfLsKBjGrC-ZEE0"
+                    "token": "eyJ0eXAiOi..."
                 }
+            }
+
++ Request (application/json)
+
+            {
+                "email": "Wrong email or password",
+                "password": "Wrong email or password"
+            }
+
++ Response 401 (application/json)
+
+    + Body   
+    
+            {
+                "error": true,
+                "message": "Invalid credentials."
+            }
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+    + Body   
+    
+            {
+                "error": true,
+                "message": {
+                    "email": [
+                        "The email field is required."
+                    ],
+                    "password": [
+                        "The password field is required."
+                    ]
+                }
+            }
+
+### Refresh current token [GET /api/v1/authentication/refresh_token]
+
+Receive new token.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer TOKEN
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "Token refreshed.",
+                "data": {
+                    "token": "eyJ0eXAiOi..."
+                }
+            }
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer EXPIRED_TOKEN
+
++ Response 401 (application/json)
+
+    + Body
+    
+            {
+                "error": "token_expired"
+            }
+
++ Request (application/json)
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": "token_not_provided"
+            }
+
+### Change current password [POST /api/v1/authentication/change_password]
+
+Change current password
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer TOKEN
+    
+    + Body
+    
+            {
+                "_method": "PUT",
+                "current_password": "Current password",
+                "password": "New password",
+                "password_confirmation": "Password confirmation"
+            }
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User password changed.",
+                "data": {
+                    "id": 2,
+                    "name": "Guilherme",
+                    "email": "guissilveira@gmail.com",
+                    "created_at": {
+                        "date": "2017-03-28 20:50:54.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "updated_at": {
+                        "date": "2017-05-08 21:21:51.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    }
+                }
+            }
+
+### Recover user password [POST /api/v1/authentication/forgot_password]
+
+Receive new password by email.
+
++ Request (application/json)
+
+        {
+            "email": "The e-mail account",
+            "password": "The account password
+        }
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User forgot password instructions sent by email.",
+                "data": {
+                "id": 2,
+                "name": "Guilherme",
+                "email": "guissilveira@gmail.com",
+                "created_at": {
+                    "date": "2017-03-28 20:50:54.000000",
+                    "timezone_type": 3,
+                    "timezone": "UTC"
+                },
+                "updated_at": {
+                    "date": "2017-05-08 21:13:27.000000",
+                    "timezone_type": 3,
+                    "timezone": "UTC"
+                }
+                }
+            }
+
+### Logout [POST /api/v1/authentication/logout]
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer TOKEN
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User logged out."
             }
