@@ -9,6 +9,8 @@ This RESTful API use the api versioning concept, JWT authentication and CORS ena
 
 More information about this API: [laravel-api-example project](https://github.com/guissilveira/laravel-api-example) on GitHub.
 
+# Group Authentication
+
 ## Authentication Collection [/api/v1/authentication]
 
 ### Authenticate a user [POST]
@@ -19,7 +21,7 @@ Authenticate an User on API.
 
         {
             "email": "The e-mail account",
-            "password": "The account password
+            "password": "The account password"
         }
 
 + Response 200 (application/json)
@@ -175,7 +177,7 @@ Receive new password by email.
 
         {
             "email": "The e-mail account",
-            "password": "The account password
+            "password": "The account password"
         }
 
 + Response 200 (application/json)
@@ -215,4 +217,199 @@ Receive new password by email.
     
             {
                 "message": "User logged out."
+            }
+
+# Group Users
+
+## Users Collection [/api/v1/users]
+
+### Get all items [GET]
+
+Get all items without any filter.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer TOKEN
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "data": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "name": "Nome",
+                            "email": "email",
+                            "created_at": {
+                                "date": "2017-05-09 13:50:44.000000",
+                                "timezone_type": 3,
+                                "timezone": "UTC"
+                            },
+                            "updated_at": {
+                                "date": "2017-05-09 13:50:44.000000",
+                                "timezone_type": 3,
+                                "timezone": "UTC"
+                            }
+                        }
+                    ]
+                }
+            }
+
+### Get one item [GET /api/v1/users/{user_id}]
+
+Get one item.
+
++ Parameters
+
+    + user_id (number) - ID of the User
+    
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: Bearer TOKEN
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "data": {
+                    "id": 1,
+                    "name": "Nome",
+                    "email": "email",
+                    "created_at": {
+                        "date": "2017-05-09 13:50:44.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "updated_at": {
+                        "date": "2017-05-09 13:50:44.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    }
+                }
+            }
+
+### Create an user [POST]
+
+Create an user.
+
++ Request (application/json)
+
+        {
+            "name": "The name",
+            "email": "The e-mail account",
+            "password": "The account password"
+        }
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User created.",
+                "data": {
+                    "id": 3,
+                    "name": "Teste",
+                    "email": "teste@teste.com",
+                    "created_at": {
+                        "date": "2017-05-09 14:10:24.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "updated_at": {
+                        "date": "2017-05-09 14:10:24.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    }
+                }
+            }
+
++ Request (application/json)
+
++ Response 422 (application/json)
+
+    + Body   
+    
+            {
+                "error": true,
+                "message": {
+                    "name": [
+                        "The name field is required."
+                    ],
+                    "email": [
+                        "The email field is required."
+                    ],
+                    "password": [
+                        "The password field is required."
+                    ]
+                }
+            }
+
+### Edit an user [POST /api/v1/users/{user_id}]
+
+Edit an user.
+
++ Parameters
+
+    + user_id (number) - ID of the User
+
++ Request (application/json)
+
+        {
+            "name": "The name",
+            "email": "The e-mail account",
+            "password": "The account password",
+            "_method": "PUT"
+        }
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User updated.",
+                "data": {
+                    "id": 3,
+                    "name": "Teste",
+                    "email": "teste@teste.com",
+                    "created_at": {
+                        "date": "2017-05-09 14:10:24.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    },
+                    "updated_at": {
+                        "date": "2017-05-09 14:10:24.000000",
+                        "timezone_type": 3,
+                        "timezone": "UTC"
+                    }
+                }
+            }
+
+### Delete an user [POST /api/v1/users/{user_id}]
+
+Edit an user.
+
++ Parameters
+
+    + user_id (number) - ID of the User
+
++ Request (application/json)
+
+        {
+            "_method": "DELETE"
+        }
+
++ Response 200 (application/json)
+
+    + Body   
+    
+            {
+                "message": "User deleted.",
+                "deleted": true
             }
