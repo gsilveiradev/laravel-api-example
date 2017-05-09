@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\System\Collection;
-use App\User;
+use App\Entities\Api\V1\User;
 
 class DatabaseSeeder extends Seeder
 {
