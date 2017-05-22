@@ -12,6 +12,7 @@ use App\Http\Requests\Api\V1\UserCreateRequest;
 use App\Http\Requests\Api\V1\UserUpdateRequest;
 use App\Repositories\Api\V1\UserRepository;
 use App\Validators\Api\V1\UserValidator;
+use Hash;
 
 class UsersController extends Controller
 {
@@ -58,6 +59,8 @@ class UsersController extends Controller
         try {
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
+            $request->merge(['password' => Hash::make($request->password)]);
+
             $user = $this->repository->create($request->all());
 
             $response = [
@@ -103,6 +106,8 @@ class UsersController extends Controller
         try {
             $this->validator->setId($id);
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            $request->merge(['password' => Hash::make($request->password)]);
 
             $user = $this->repository->update($request->all(), $id);
 
