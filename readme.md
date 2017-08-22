@@ -71,6 +71,14 @@ See all routes file to test other available routes: ```routes/api.php```.
 
 # Interest stuff
 
+## Check PSR-2 coding standard
+
+By default, PHP_CodeSniffer is included with composer packages. To check you coding standards following PSR-2, run this command inside workspace container:
+
+```
+./vendor/bin/phpcs --standard=PSR2 app/
+```
+
 ## Commands
 
 Start and pause the virtual machine (laravel-api-example):
